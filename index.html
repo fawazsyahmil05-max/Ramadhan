@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RamadhanKu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+    background:radial-gradient(circle at top,#0f172a,#020617);
+    color:#fff;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* Stars */
+.stars{
+    position:fixed;
+    width:200%;
+    height:200%;
+    background-image:radial-gradient(white 1px,transparent 1px);
+    background-size:50px 50px;
+    opacity:.12;
+    animation:moveStars 120s linear infinite
+}
+@keyframes moveStars{
+    to{transform:translate(-500px,-500px)}
+}
+
+/* Shooting stars */
+.shooting-star{
+    position:fixed;
+    width:2px;height:80px;
+    background:linear-gradient(white,transparent);
+    transform:rotate(45deg);
+    animation:shoot 3s linear infinite;
+    opacity:.7
+}
+.s1{top:15%;left:25%}
+.s2{top:35%;left:75%;animation-delay:1s}
+.s3{top:65%;left:45%;animation-delay:2s}
+@keyframes shoot{
+    from{opacity:0}
+    10%{opacity:1}
+    to{transform:translate(-300px,300px) rotate(45deg);opacity:0}
+}
+
+/* Moon */
+.moon{
+    position:fixed;
+    top:80px;right:60px;
+    width:120px;height:120px;
+    border-radius:50%;
+    background:radial-gradient(circle,#fde68a,#facc15);
+    animation:moonPulse 3s ease-in-out infinite
+}
+@keyframes moonPulse{
+    0%{box-shadow:0 0 40px rgba(250,204,21,.4)}
+    50%{box-shadow:0 0 90px rgba(250,204,21,.9)}
+    100%{box-shadow:0 0 40px rgba(250,204,21,.4)}
+}
+
+/* Header glass */
+.top-header{
+    position:fixed;
+    top:20px;left:20px;
+    padding:10px 18px;
+    border-radius:14px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    font-weight:600
+}
+.top-header::after{
+    content:"";
+    position:absolute;
+    left:10%;bottom:-6px;
+    width:80%;height:2px;
+    background:linear-gradient(90deg,#38bdf8,transparent);
+    animation:glow 2s infinite
+}
+@keyframes glow{
+    50%{box-shadow:0 0 14px #38bdf8;opacity:1}
+}
+
+/* Container */
+.container{
+    width:95%;
+    max-width:420px;
+    text-align:center;
+    z-index:2
+}
+
+.greeting{
+    background:rgba(255,255,255,.08);
+    padding:10px 18px;
+    border-radius:50px;
+    backdrop-filter:blur(10px);
+    margin-bottom:20px;
+    font-size:14px
+}
+
+.arabic{font-size:32px;color:#facc15}
+.title{font-size:26px;margin:10px 0}
+.subtitle{font-size:14px;opacity:.6;margin-bottom:25px}
+
+/* Card */
+.card{
+    background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+    border-radius:22px;
+    padding:20px;
+    backdrop-filter:blur(15px);
+    box-shadow:0 20px 40px rgba(0,0,0,.4);
+    margin-bottom:15px
+}
+.card-title{color:#facc15;font-size:14px;margin-bottom:15px}
+
+/* 🔥 Countdown Box */
+.countdown{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px
+}
+
+.time-box{
+    background:rgba(255,255,255,.08);
+    border-radius:16px;
+    padding:12px 0;
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(56,189,248,.25);
+    box-shadow:0 0 18px rgba(56,189,248,.15);
+}
+
+.time{
+    font-size:24px;
+    font-weight:600
+}
+.label{
+    font-size:11px;
+    opacity:.6
+}
+
+/* Prayer */
+.prayer{
+    display:flex;
+    justify-content:space-around
+}
+.prayer-time{font-size:18px;font-weight:600}
+.prayer-label{font-size:11px;opacity:.5}
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+<div class="shooting-star s1"></div>
+<div class="shooting-star s2"></div>
+<div class="shooting-star s3"></div>
+<div class="moon"></div>
+
+<div class="top-header">🌙 RamadhanKu</div>
+
+<div class="container">
+
+    <div class="greeting" id="greeting">🌙 Selamat Malam</div>
+
+    <div class="arabic">رمضان كريم</div>
+    <div class="title">Ramadhan Kareem</div>
+    <div class="subtitle">Mari sempurnakan ibadah membaca Al-Qur'an bulan ini</div>
+
+    <div class="card">
+        <div class="card-title">📅 Menuju Idul Fitri</div>
+
+        <div class="countdown">
+            <div class="time-box"><div class="time" id="days">00</div><div class="label">HARI</div></div>
+            <div class="time-box"><div class="time" id="hours">00</div><div class="label">JAM</div></div>
+            <div class="time-box"><div class="time" id="minutes">00</div><div class="label">MENIT</div></div>
+            <div class="time-box"><div class="time" id="seconds">00</div><div class="label">DETIK</div></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">🕌 Jadwal Puasa Jogja</div>
+        <div class="prayer">
+            <div><div class="prayer-time" id="imsak">--:--</div><div class="prayer-label">IMSAK</div></div>
+            <div><div class="prayer-time" id="maghrib">--:--</div><div class="prayer-label">BUKA</div></div>
+        </div>
+    </div>
+
+</div>
+
+<audio id="bg-audio">
+    <source src="ambice.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* Greeting */
+const g=document.getElementById("greeting");
+const h=new Date().getHours();
+g.innerText="🌙 "+(h<11?"Selamat Pagi":h<15?"Selamat Siang":h<18?"Selamat Sore":"Selamat Malam");
+
+/* Countdown */
+const target=new Date("March 20, 2026 00:00:00").getTime();
+setInterval(()=>{
+    const d=target-Date.now();
+    days.innerText=Math.floor(d/86400000);
+    hours.innerText=Math.floor(d/3600000)%24;
+    minutes.innerText=Math.floor(d/60000)%60;
+    seconds.innerText=Math.floor(d/1000)%60;
+},1000);
+
+/* Prayer API */
+fetch("https://api.aladhan.com/v1/timingsByCity?city=Yogyakarta&country=Indonesia&method=11")
+.then(r=>r.json())
+.then(d=>{
+    imsak.innerText=d.data.timings.Imsak;
+    maghrib.innerText=d.data.timings.Maghrib;
+});
+
+/* Audio touch */
+const audio=document.getElementById("bg-audio");
+function play(){
+    audio.volume=0;audio.play();
+    let v=0;const i=setInterval(()=>{v+=.05;audio.volume=v;if(v>=1)clearInterval(i)},100);
+    removeEventListener("click",play);
+    removeEventListener("touchstart",play);
+}
+addEventListener("click",play);
+addEventListener("touchstart",play);
+</script>
+
+</body>
+</html>
