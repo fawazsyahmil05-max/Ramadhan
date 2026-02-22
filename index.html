@@ -52,20 +52,7 @@ body{
     to{transform:translate(-300px,300px) rotate(45deg);opacity:0}
 }
 
-/* Moon */
-.moon{
-    position:fixed;
-    top:80px;right:60px;
-    width:120px;height:120px;
-    border-radius:50%;
-    background:radial-gradient(circle,#fde68a,#facc15);
-    animation:moonPulse 3s ease-in-out infinite
-}
-@keyframes moonPulse{
-    0%{box-shadow:0 0 40px rgba(250,204,21,.4)}
-    50%{box-shadow:0 0 90px rgba(250,204,21,.9)}
-    100%{box-shadow:0 0 40px rgba(250,204,21,.4)}
-}
+
 
 /* Header glass */
 .top-header{
@@ -162,7 +149,7 @@ body{
 <div class="shooting-star s1"></div>
 <div class="shooting-star s2"></div>
 <div class="shooting-star s3"></div>
-<div class="moon"></div>
+
 
 <div class="top-header">🌙 RamadhanKu</div>
 
@@ -195,7 +182,7 @@ body{
 
 </div>
 
-<audio id="bg-audio">
+<audio id="bg-audio" preload="auto">
     <source src="ambice.mp3" type="audio/mpeg">
 </audio>
 
@@ -224,15 +211,38 @@ fetch("https://api.aladhan.com/v1/timingsByCity?city=Yogyakarta&country=Indonesi
 });
 
 /* Audio touch */
-const audio=document.getElementById("bg-audio");
-function play(){
-    audio.volume=0;audio.play();
-    let v=0;const i=setInterval(()=>{v+=.05;audio.volume=v;if(v>=1)clearInterval(i)},100);
-    removeEventListener("click",play);
-    removeEventListener("touchstart",play);
+const audio = document.getElementById("bg-audio");
+
+function unlockAudio() {
+
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+
+                audio.volume = 0;
+                let v = 0;
+
+                const fade = setInterval(() => {
+                    v += 0.05;
+                    audio.volume = v;
+
+                    if (v >= 1) clearInterval(fade);
+                }, 100);
+
+            })
+            .catch(() => {
+                console.log("Audio masih diblokir browser");
+            });
+    }
+
+    document.removeEventListener("touchstart", unlockAudio);
+    document.removeEventListener("click", unlockAudio);
 }
-addEventListener("click",play);
-addEventListener("touchstart",play);
+
+document.addEventListener("touchstart", unlockAudio, { once:true });
+document.addEventListener("click", unlockAudio, { once:true });
 </script>
 
 </body>
